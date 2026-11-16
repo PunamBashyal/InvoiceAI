@@ -10,23 +10,31 @@ from validator import validate_invoice
 
 app = FastAPI(title="Invoice Extraction API")
 
+# CORS configuration
 app.add_middleware(
     CORSMiddleware,
-    allow_origins=["http://localhost:5173"],
+    allow_origins=[
+        "http://localhost:5173",
+        "https://invoice-ai-six.vercel.app",
+    ],
     allow_credentials=True,
     allow_methods=["*"],
     allow_headers=["*"],
 )
 
+# Upload directory
 UPLOAD_DIR = Path("api_uploads")
 UPLOAD_DIR.mkdir(exist_ok=True)
+
 
 @app.get("/")
 def home():
     return {"message": "Invoice Extraction API is running"}
 
+
 @app.post("/api/extract/")
 async def extract_invoice(file: UploadFile = File(...)):
+
     allowed_extensions = {".pdf", ".png", ".jpg", ".jpeg", ".webp"}
     extension = Path(file.filename or "").suffix.lower()
 
@@ -54,12 +62,15 @@ async def extract_invoice(file: UploadFile = File(...)):
 
     except HTTPException:
         raise
+
     except Exception as error:
         raise HTTPException(
             status_code=500,
             detail=f"Invoice processing failed: {str(error)}"
         )
+
     finally:
         await file.close()
+
         if temp_path.exists():
             temp_path.unlink()
