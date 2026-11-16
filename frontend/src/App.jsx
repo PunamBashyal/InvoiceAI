@@ -12,8 +12,14 @@ import {
 import "./App.css";
 import "./styles.css";
 
-const API_URL = "http://127.0.0.1:8000/api/extract/";
+const API_URL = `${
+  import.meta.env.VITE_API_URL || "https://invoiceai-9hol.onrender.com"
+}/api/extract/`;
 
+const response = await fetch(API_URL, {
+  method: "POST",
+  body: formData,
+});
 /* =====================================================
    MAIN APP ROUTING
 ===================================================== */
