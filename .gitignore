@@ -1,6 +1,26 @@
 
+# Python
 venv/
-.env
 __pycache__/
 *.pyc
+*.pyo
+
+# Secrets
+.env
+.env.*
+
+# Generated files
+api_uploads/
 output/
+
+# Frontend
+frontend/node_modules/
+frontend/dist/
+
+# IDE
+.vscode/
+.idea/
+
+# Operating system
+.DS_Store
+Thumbs.db
