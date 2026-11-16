@@ -18,7 +18,7 @@ BASE_DIR = Path(__file__).resolve().parent
 
 load_dotenv(BASE_DIR / ".env")
 
-MODEL_NAME = "gemini-3-flash-preview"
+MODEL_NAME = "gemini-3.5-flash-lite"
 
 SUPPORTED_IMAGE_FORMATS = {
     ".png",
@@ -46,8 +46,12 @@ def get_gemini_client():
             "Gemini API key is missing. Check your .env file."
         )
 
-    return genai.Client(api_key=api_key)
-
+    return genai.Client(
+        api_key=api_key,
+        http_options=types.HttpOptions(
+            api_version="v1beta"
+        )
+    )
 
 # --------------------------------------------------
 # IMAGE AND PDF LOADING
