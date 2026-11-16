@@ -16,10 +16,7 @@ const API_URL = `${
   import.meta.env.VITE_API_URL || "https://invoiceai-9hol.onrender.com"
 }/api/extract/`;
 
-const response = await fetch(API_URL, {
-  method: "POST",
-  body: formData,
-});
+
 /* =====================================================
    MAIN APP ROUTING
 ===================================================== */
